@@ -13,20 +13,40 @@ import { ValidationPipe } from '@nestjs/common';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { CreateBookDto } from './dto/create-book.dto';
 import { AuthGuard } from '@nestjs/passport';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+} from '@nestjs/swagger';
 @Controller('books')
 export class BooksController {
   constructor(private booksService: BooksService) {}
 
-  @UseGuards(AuthGuard('jwt'))
   @Post()
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Create a new book' })
+  @ApiBody({ type: CreateBookDto })
+  @ApiResponse({ status: 201, description: 'Book created successfully' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   create(@Body(new ValidationPipe()) createBookDto: CreateBookDto) {
     return this.booksService.create(createBookDto);
   }
+
   @Get()
+  @ApiOperation({ summary: 'Get all books' })
+  @ApiResponse({ status: 200, description: 'List of books returned' })
   findAll() {
     return this.booksService.findAll();
   }
+
   @Get(':id')
+  @ApiOperation({ summary: 'Get book by id' })
+  @ApiParam({ name: 'id', description: 'Book ID' })
+  @ApiResponse({ status: 200, description: 'Book returned' })
+  @ApiResponse({ status: 404, description: 'Book not found' })
   findOne(@Param('id') id: number) {
     if (!id) {
       return {
@@ -35,8 +55,14 @@ export class BooksController {
     }
     return this.booksService.findOne(+id);
   }
-  @UseGuards(AuthGuard('jwt'))
+
   @Put(':id')
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Update an existing book' })
+  @ApiParam({ name: 'id', description: 'Book ID' })
+  @ApiResponse({ status: 200, description: 'Book updated successfully' })
+  @ApiResponse({ status: 404, description: 'Book not found' })
   update(
     @Param('id') id: string,
     @Body(new ValidationPipe()) updateBookDto: UpdateBookDto,
@@ -47,8 +73,14 @@ export class BooksController {
     };
     return this.booksService.update(+id, updatedBook);
   }
-  @UseGuards(AuthGuard('jwt'))
+
   @Delete(':id')
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Delete a book' })
+  @ApiParam({ name: 'id', description: 'Book ID' })
+  @ApiResponse({ status: 200, description: 'Book deleted successfully' })
+  @ApiResponse({ status: 404, description: 'Book not found' })
   remove(@Body() id: number) {
     return this.booksService.remove(id);
   }
