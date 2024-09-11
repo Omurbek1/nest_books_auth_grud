@@ -1,20 +1,27 @@
 version: '3'
 services:
+  app:
+    build: .
+    ports:
+      - '9000:9000'
+    environment:
+      - PORT=9000
+    depends_on:
+      - db
+    networks:
+      - app-network
+
   db:
-    image: postgres
+    image: postgres:13
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 52280930
       POSTGRES_DB: books_db
     ports:
-      - "5432:5432"
-    volumes:
-      - db-data:/var/lib/postgresql/data
-  app:
-    build: .
-    ports:
-      - "3000:3000"
-    depends_on:
-      - db
-volumes:
-  db-data:
+      - '5432:5432'
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
