@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Book } from './entities/book.entity';
+import { CreateBookDto } from './dto/create-book.dto';
 
 @Injectable()
 export class BooksService {
@@ -10,13 +11,20 @@ export class BooksService {
     private booksRepository: Repository<Book>,
   ) {}
 
-  create(book: {
-    title: string;
-    author?: string;
-  }): Promise<{ message: string }> {
+  create(createBookDto: CreateBookDto): Promise<{ message: string }> {
+    const publicationDate = createBookDto.publicationDate
+      ? new Date(createBookDto.publicationDate)
+      : new Date();
+    const newBook = this.booksRepository.create({
+      ...createBookDto,
+      publicationDate,
+    });
+
     return this.booksRepository
-      .save(book)
-      .then(() => ({ message: 'Book created successfully' }))
+      .save(newBook)
+      .then(() => ({
+        message: 'Book created successfully',
+      }))
       .catch(() => ({ message: 'Error creating book' }));
   }
 
@@ -25,6 +33,11 @@ export class BooksService {
   }
 
   findOne(id: number) {
+    if (!id) {
+      return {
+        message: 'Book not found',
+      };
+    }
     return this.booksRepository.findOne({ where: { id } });
   }
 
