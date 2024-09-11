@@ -32,46 +32,54 @@ This is a simple Book CRUD (Create, Read, Update, Delete) application built with
    git clone https://github.com/Omurbek1/nest_books_auth_grud
    cd book-crud-app
 
-2. Install the dependencies:
-    ```sh
-    npm install
-    # or
-    yarn install
+   ```
 
+2. Install the dependencies:
+
+   ```sh
+   npm install
+   # or
+   yarn install
+
+   ```
 
 3. Set up environment variables:
-Create a .env file in the root of the project and add the following variables:
-    ```sh
-     DATABASE_HOST=localhost
-     DATABASE_PORT=5432
-     DATABASE_USER=your_db_user
-     DATABASE_PASSWORD=your_db_password
-     DATABASE_NAME=your_db_name
-
+   Create a .env file in the root of the project and add the following variables:
+   ```sh
+   DATABASE_HOST=localhost
+   DATABASE_PORT=5432
+   DATABASE_USER=your_db_user
+   DATABASE_PASSWORD=your_db_password
+   DATABASE_NAME=your_db_name
 
 4. Run the PostgreSQL database (if using Docker):
-    ```sh
-     docker-compose up -d
+
+   ```sh
+    docker-compose up -d
+
+   ```
 
 5. Run the migrations to set up the database schema:
-    ```sh
-    npm run typeorm migration:run
+   ```sh
+   npm run typeorm migration:run
+   ```
+
 # or
 
-
-
-    ```sh
-   yarn typeorm migration:run
-
+yarn typeorm migration:run
 
 Running the Application
 
 1. Start the application:
-npm run start
+   npm run start
+
 # or
+
 yarn start
 
 2. The application will be running at http://localhost:3000
 
 API Documentation
 The API documentation is available at http://localhost:3000/api using Swagger.
+
+![alt text](ScreenRecording2024-09-11at17.32.36-ezgif.com-video-to-gif-converter.gif)
