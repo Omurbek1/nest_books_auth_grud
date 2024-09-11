@@ -33,19 +33,21 @@ This is a simple Book CRUD (Create, Read, Update, Delete) application built with
    cd book-crud-app
 
 2. Install the dependencies:
-npm install
-# or
-yarn install
+    ```sh
+    npm install
+    # or
+    yarn install
+
 
 3. Set up environment variables:
 Create a .env file in the root of the project and add the following variables:
+    ```sh
+     DATABASE_HOST=localhost
+     DATABASE_PORT=5432
+     DATABASE_USER=your_db_user
+     DATABASE_PASSWORD=your_db_password
+     DATABASE_NAME=your_db_name
 
-DATABASE_HOST=localhost
-DATABASE_PORT=5432
-DATABASE_USER=your_db_user
-DATABASE_PASSWORD=your_db_password
-DATABASE_NAME=your_db_name
-JWT_SECRET=your_jwt_secret
 
 4. Run the PostgreSQL database (if using Docker):
 
