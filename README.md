@@ -50,13 +50,18 @@ Create a .env file in the root of the project and add the following variables:
 
 
 4. Run the PostgreSQL database (if using Docker):
-
-docker-compose up -d
+    ```sh
+     docker-compose up -d
 
 5. Run the migrations to set up the database schema:
-npm run typeorm migration:run
+    ```sh
+    npm run typeorm migration:run
 # or
-yarn typeorm migration:run
+
+
+
+    ```sh
+   yarn typeorm migration:run
 
 
 Running the Application
